@@ -2,6 +2,9 @@ name: Test
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   prepare:
@@ -14,7 +17,7 @@ jobs:
       - name: Get QtBuildScript
         run: |
           cd ~/
-          git clone https://github.com/moodyhunter/QtBuildScript
+          git clone --verbose https://github.com/moodyhunter/QtBuildScript
 
       - name: Restore Caches
         uses: actions/cache@v3

@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }}
     strategy:
-      fail-fast: false
+#       fail-fast: false
       matrix:
         config:
           - { os: windows-latest, cache: 'sccache', shell_prepare: 'set MSYS2_ROOT=%USERPROFILE%\scoop\apps\msys2\current && set PATH=%MSYS2_ROOT%;%PATH%' }
@@ -21,7 +21,6 @@ jobs:
     steps:
       - name: Get QtBuildScript
         run: |
-          cd ~/
           git clone --verbose https://github.com/moodyhunter/QtBuildScript
 
       - name: Restore Caches
@@ -38,6 +37,7 @@ jobs:
  
       - name: Install Packages - Windows
         if: runner.os == 'Windows'
+        shell: cmd
         run: |
           scoop install msys2 cmake ninja sccache
           msys2

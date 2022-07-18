@@ -79,8 +79,8 @@ jobs:
 
       - name: Setup kits
         shell: bash
+        working-directory: ${{ matrix.config.basedir }}
         run: |
-          cd ${{ matrix.config.basedir }}
           cd ./QtBuildScript
           git submodule update --init
           echo '${{ matrix.config.cache }}' > .base-kits
@@ -90,6 +90,7 @@ jobs:
           # echo 'examples' >> .base-kits
 
       - name: Update Qt
+        working-directory: ${{ matrix.config.basedir }}
         run: |
           cd ${{ matrix.config.basedir }}
           cd ./QtBuildScript
@@ -97,6 +98,7 @@ jobs:
           fish ./update-qt.fish
 
       - name: Build Qt
+        working-directory: ${{ matrix.config.basedir }}
         run: |
           cd ${{ matrix.config.basedir }}
           cd ./QtBuildScript

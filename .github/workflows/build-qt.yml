@@ -45,7 +45,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           ${{ matrix.config.shell_prepare }}
-          pacman -Sy fish
+          pacman --noconfirm -Sy fish
 
       - name: Install Packages - Linux
         if: runner.os == 'Linux'

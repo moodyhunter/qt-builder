@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  greet:
+  prepare:
     runs-on: macos-latest
 
     steps:
-    - name: tmate
-      uses: mxschmitt/action-tmate@v3.11
+    - name: nice
+      run: echo "Nice"

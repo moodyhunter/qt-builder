@@ -29,14 +29,12 @@ jobs:
           path: ~/QtBuildScript/.build-cache/
           key: ${{ runner.os }}-qt-cache
 
-      # See https://github.com/ScoopInstaller/Install#for-admin
       - name: Setup Windows Environment
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-          iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-
+        if: runner.os == 'Windows'     
+        uses: MinoruSekine/setup-scoop@v1
+        with:
+          add_extras_bucket: true
+ 
       - name: nice
         shell: bash
         run: |

@@ -11,5 +11,16 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: nice
-      run: echo "Nice"
+      - name: Get QtBuildScript
+        run: |
+          cd ~/
+          git clone https://github.com/moodyhunter/QtBuildScript
+
+      - name: Restore Caches
+        uses: actions/cache@v3
+        with:
+          path: ~/QtBuildScript/.build-cache/
+          key: ${{ runner.os }}-qt-cache
+
+      - name: nice
+        run: echo "Nice"

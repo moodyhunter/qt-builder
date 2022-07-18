@@ -28,6 +28,13 @@ jobs:
           path: ~/QtBuildScript/.build-cache/
           key: ${{ runner.os }}-qt-cache
 
+      - name: Setup Windows Environment
+        if: runner.os == "windows"
+        shell: pwsh
+        run: |
+          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+          irm get.scoop.sh | iex
+
       - name: nice
         shell: bash
         run: |

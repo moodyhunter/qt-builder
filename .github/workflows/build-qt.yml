@@ -12,8 +12,8 @@ jobs:
       matrix:
         config:
           - { os: windows-latest }
-          - { os: macos-latest, ok: true }
-          - { os: ubuntu-latest }
+          - { os: macos-latest, setup: 'brew install fish ninja' }
+          - { os: ubuntu-latest, setup: 'scoop install mysys2 ninja sccache' }
     runs-on: ${{ matrix.config.os }}
 
     steps:
@@ -30,4 +30,11 @@ jobs:
 
       - name: nice
         shell: bash
-        run: echo "Nice"
+        run: |
+          cd ~/QtBuildScript
+          echo 'sccache' > .base-kits
+          echo 'shared' >> .base-kits
+          echo 'release' >> .base-kits
+          echo 'tests' >> .base-kits
+          echo 'examples' >> .base-kits
+          ${{ matrix.config.setup }}

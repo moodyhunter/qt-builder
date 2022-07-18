@@ -43,7 +43,6 @@ jobs:
 
       - name: Process Installed Packages - Windows
         if: runner.os == 'Windows'
-        shell: cmd
         run: |
           ${{ matrix.config.shell_prepare }}
           pacman -Sy fish

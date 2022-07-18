@@ -14,9 +14,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: windows-latest, setup: '' }
-          - { os: macos-latest, setup: '' }
-          - { os: ubuntu-latest }
+          - { os: windows-latest, cache: 'sccache', shell_prepare: 'set MSYS2_ROOT=%USERPROFILE%\scoop\apps\msys2\current && set PATH=%MSYS2_ROOT%;%PATH%' }
+          - { os: macos-latest,   cache: 'sccache', shell_prepare: '' }
+          - { os: ubuntu-latest,  cache: 'ccache',  shell_prepare: '' }
 
     steps:
       - name: Get QtBuildScript
@@ -27,7 +27,7 @@ jobs:
       - name: Restore Caches
         uses: actions/cache@v3
         with:
-          path: ~/QtBuildScript/.*cache/
+          path: ./QtBuildScript/.*cache/
           key: ${{ runner.os }}-qt-cache
 
       - name: Setup Windows Environment
@@ -41,6 +41,9 @@ jobs:
         run: |
           scoop install msys2 cmake ninja sccache
           msys2
+          ${{ matrix.config.shell_prepare }}
+          cd %MSYS2_ROOT%
+          pacman -Sy fish
 
       - name: Install Packages - Linux
         if: runner.os == 'Linux'
@@ -58,13 +61,18 @@ jobs:
         run: |
           brew install fish cmake ninja sccache
 
-      - name: nice
+      - name: Setup kits
         shell: bash
         run: |
-          cd ~/QtBuildScript
-          echo 'sccache' > .base-kits
+          cd ./QtBuildScript
+          git submodule update --init
+          echo '${{ matrix.config.cache }}' > .base-kits
           echo 'shared' >> .base-kits
           echo 'release' >> .base-kits
           echo 'tests' >> .base-kits
           echo 'examples' >> .base-kits
-          ${{ matrix.config.setup }}
+
+      - name: Update Qt
+        run: |
+          cd ./QtBuildScript
+          ${{ matrix.config.shell_prepare }}

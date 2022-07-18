@@ -27,7 +27,7 @@ jobs:
       - name: Restore Caches
         uses: actions/cache@v3
         with:
-          path: ~/QtBuildScript/.build-cache/
+          path: ~/QtBuildScript/.*cache/
           key: ${{ runner.os }}-qt-cache
 
       - name: Setup Windows Environment
@@ -39,7 +39,7 @@ jobs:
       - name: Install Packages - Windows
         if: runner.os == 'Windows'
         run: |
-          scoop install msys2 ninja sccache
+          scoop install msys2 cmake ninja sccache
           msys2
 
       - name: Install Packages - Linux
@@ -51,11 +51,12 @@ jobs:
           sudo apt update
           # sudo apt upgrade -y
           sudo apt-get build-dep qtbase5-dev qtdeclarative5-dev qttools5-dev qttools5-dev-tools qtwayland5-dev-tools
+          sudo apt-get install -y fish cmake ninja-build ccache
 
       - name: Install Packages - macOS
         if: runner.os == 'macOS'
         run: |
-          brew install fish ninja
+          brew install fish cmake ninja sccache
 
       - name: nice
         shell: bash

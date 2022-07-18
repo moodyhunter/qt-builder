@@ -12,9 +12,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: windows-latest }
+          - { os: windows-latest, setup: 'scoop install mysys2 ninja sccache' }
           - { os: macos-latest, setup: 'brew install fish ninja' }
-          - { os: ubuntu-latest, setup: 'scoop install mysys2 ninja sccache' }
+          - { os: ubuntu-latest }
     runs-on: ${{ matrix.config.os }}
 
     steps:
@@ -30,7 +30,7 @@ jobs:
           key: ${{ runner.os }}-qt-cache
 
       - name: Setup Windows Environment
-        if: runner.os == 'windows-latest'
+        if: runner.os == 'Windows'
         shell: pwsh
         run: |
           Set-ExecutionPolicy RemoteSigned -Scope CurrentUser

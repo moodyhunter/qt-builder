@@ -31,7 +31,7 @@ jobs:
 
       - name: Setup Windows Environment
         if: runner.os == 'Windows'     
-        uses: MinoruSekine/setup-scoop@v1
+        uses: MinoruSekine/setup-scoop@main
         with:
           add_extras_bucket: true
  

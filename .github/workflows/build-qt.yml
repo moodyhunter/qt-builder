@@ -29,7 +29,7 @@ jobs:
           key: ${{ runner.os }}-qt-cache
 
       - name: Setup Windows Environment
-        if: runner.os == "windows"
+        if: runner.os == 'windows'
         shell: pwsh
         run: |
           Set-ExecutionPolicy RemoteSigned -Scope CurrentUser

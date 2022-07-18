@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }}
     strategy:
-#       fail-fast: false
+      fail-fast: false
       matrix:
         config:
           - { os: windows-latest, cache: 'sccache', shell_prepare: '$env:MSYS2_ROOT="$home\scoop\apps\msys2\current"; $env:PATH="$env:MSYS2_ROOT\usr\bin;$env:PATH"' }
@@ -61,6 +61,7 @@ jobs:
           # sudo apt upgrade -y
           sudo apt-get build-dep qtbase5-dev qtdeclarative5-dev qttools5-dev qttools5-dev-tools qtwayland5-dev-tools
           sudo apt-get install -y fish cmake ninja-build ccache
+          sudo apt-get install -y libclang-11-dev
 
       - name: Install Packages - macOS
         if: runner.os == 'macOS'

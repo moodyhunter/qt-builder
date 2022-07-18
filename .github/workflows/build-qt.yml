@@ -47,6 +47,10 @@ jobs:
           ${{ matrix.config.shell_prepare }}
           pacman --noconfirm -Sy fish
 
+      - name: Setup MSVC Developer Environment - Windows
+        uses: ilammy/msvc-dev-cmd@v1
+        if: runner.os == 'Windows'
+
       - name: Install Packages - Linux
         if: runner.os == 'Linux'
         run: |
@@ -79,3 +83,9 @@ jobs:
           cd ./QtBuildScript
           ${{ matrix.config.shell_prepare }}
           fish ./update-qt.fish
+
+      - name: Build Qt
+        run: |
+          cd ./QtBuildScript
+          ${{ matrix.config.shell_prepare }}
+          fish ./build-qt.fish

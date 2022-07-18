@@ -10,10 +10,11 @@ jobs:
   prepare:
     strategy:
       matrix:
-        - { os: windows-latest }
-        - { os: macos-latest, ok: true }
-        - { os: ubuntu-latest }
-    runs-on: ${{ matrix.os }}
+        config:
+          - { os: windows-latest }
+          - { os: macos-latest, ok: true }
+          - { os: ubuntu-latest }
+    runs-on: ${{ matrix.config.os }}
 
     steps:
       - name: Get QtBuildScript

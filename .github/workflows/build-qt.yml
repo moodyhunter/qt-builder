@@ -26,4 +26,5 @@ jobs:
           key: ${{ runner.os }}-qt-cache
 
       - name: nice
+        shell: bash
         run: echo "Nice"

@@ -46,12 +46,11 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           export DISTRO=$(lsb_release -sc)
-          # DANGER
-          echo "deb http://archive.ubuntu.com/ubuntu/ kinetic main universe" | sudo tee -a /etc/apt/sources.list
-          echo "deb-src http://archive.ubuntu.com/ubuntu/ kinetic main universe" | sudo tee -a /etc/apt/sources.list
+          echo "deb http://archive.ubuntu.com/ubuntu/ $DISTRO main universe" | sudo tee -a /etc/apt/sources.list
+          echo "deb-src http://archive.ubuntu.com/ubuntu/ $DISTRO main universe" | sudo tee -a /etc/apt/sources.list
           sudo apt update
-          sudo apt upgrade -y
-          sudo apt-get build-dep qt6-base-dev
+          # sudo apt upgrade -y
+          sudo apt-get build-dep qtbase5-dev qtdeclarative5-dev qttools5-dev qttools5-dev-tools qtwayland5-dev-tools
 
       - name: Install Packages - macOS
         if: runner.os == 'macOS'

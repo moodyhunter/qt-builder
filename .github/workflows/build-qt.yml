@@ -14,7 +14,7 @@ jobs:
 #       fail-fast: false
       matrix:
         config:
-          - { os: windows-latest, cache: 'sccache', shell_prepare: 'set MSYS2_ROOT=%USERPROFILE%\scoop\apps\msys2\current && set PATH=%MSYS2_ROOT%;%PATH%' }
+          - { os: windows-latest, cache: 'sccache', shell_prepare: '$env:MSYS2_ROOT="$home\scoop\apps\msys2\current"; $env:PATH="$env:MSYS2_ROOT\usr\bin;$env:PATH"' }
           - { os: macos-latest,   cache: 'sccache', shell_prepare: '' }
           - { os: ubuntu-latest,  cache: 'ccache',  shell_prepare: '' }
 
@@ -37,12 +37,15 @@ jobs:
  
       - name: Install Packages - Windows
         if: runner.os == 'Windows'
-        shell: cmd
         run: |
           scoop install msys2 cmake ninja sccache
           msys2
+
+      - name: Process Installed Packages - Windows
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: |
           ${{ matrix.config.shell_prepare }}
-          cd %MSYS2_ROOT%
           pacman -Sy fish
 
       - name: Install Packages - Linux
@@ -76,3 +79,4 @@ jobs:
         run: |
           cd ./QtBuildScript
           ${{ matrix.config.shell_prepare }}
+          fish ./update-qt.fish

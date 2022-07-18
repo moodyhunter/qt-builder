@@ -45,7 +45,7 @@ jobs:
       - name: Install Packages - Linux
         if: runner.os == 'Linux'
         run: |
-          true
+          sudo apt-get build-dep qt6-base-dev
 
       - name: Install Packages - macOS
         if: runner.os == 'macOS'

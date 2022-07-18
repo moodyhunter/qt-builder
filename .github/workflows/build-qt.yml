@@ -45,7 +45,7 @@ jobs:
       - name: Install Packages - Linux
         if: runner.os == 'Linux'
         run: |
-          export DISTRO=(lsb_release -sc)
+          export DISTRO=$(lsb_release -sc)
           echo "deb-src http://archive.ubuntu.com/ubuntu/ $DISTRO main universe" >> /etc/apt/source.list
           sudo apt-get build-dep qt6-base-dev
 

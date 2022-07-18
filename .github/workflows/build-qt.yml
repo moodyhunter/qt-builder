@@ -14,19 +14,20 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: windows-latest, cache: 'sccache', shell_prepare: '$env:MSYS2_ROOT="$home\scoop\apps\msys2\current"; $env:PATH="$env:MSYS2_ROOT\usr\bin;$env:PATH"' }
-          - { os: macos-latest,   cache: 'sccache', shell_prepare: '' }
-          - { os: ubuntu-latest,  cache: 'ccache',  shell_prepare: '' }
+          - { os: windows-latest, cache: 'sccache', basedir: 'C:\', shell_prepare: '$env:MSYS2_ROOT="$home\scoop\apps\msys2\current"; $env:PATH="$env:MSYS2_ROOT\usr\bin;$env:PATH"' }
+          - { os: macos-latest,   cache: 'sccache', basedir: './',  shell_prepare: '' }
+          - { os: ubuntu-latest,  cache: 'ccache',  basedir: './',  shell_prepare: '' }
 
     steps:
       - name: Get QtBuildScript
         run: |
+          cd ${{ matrix.config.basedir }}
           git clone --verbose https://github.com/moodyhunter/QtBuildScript
 
       - name: Restore Caches
         uses: actions/cache@v3
         with:
-          path: ./QtBuildScript/.*cache/
+          path: "${{ matrix.config.basedir }}/QtBuildScript/.*cache/"
           # "github.run_id" is unique, which causes the cache to always get
           # saved at the end of a successful run.
           key:  ccache-${{ matrix.os }}-${{ github.ref }}-${{ github.run_id }}
@@ -79,6 +80,7 @@ jobs:
       - name: Setup kits
         shell: bash
         run: |
+          cd ${{ matrix.config.basedir }}
           cd ./QtBuildScript
           git submodule update --init
           echo '${{ matrix.config.cache }}' > .base-kits
@@ -89,12 +91,14 @@ jobs:
 
       - name: Update Qt
         run: |
+          cd ${{ matrix.config.basedir }}
           cd ./QtBuildScript
           ${{ matrix.config.shell_prepare }}
           fish ./update-qt.fish
 
       - name: Build Qt
         run: |
+          cd ${{ matrix.config.basedir }}
           cd ./QtBuildScript
           ${{ matrix.config.shell_prepare }}
           fish ./build-qt.fish

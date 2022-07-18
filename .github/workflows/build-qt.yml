@@ -9,6 +9,7 @@ on:
 jobs:
   prepare:
     strategy:
+      fail-fast: false
       matrix:
         config:
           - { os: windows-latest }
@@ -29,7 +30,7 @@ jobs:
           key: ${{ runner.os }}-qt-cache
 
       - name: Setup Windows Environment
-        if: runner.os == 'windows'
+        if: runner.os == 'windows-latest'
         shell: pwsh
         run: |
           Set-ExecutionPolicy RemoteSigned -Scope CurrentUser

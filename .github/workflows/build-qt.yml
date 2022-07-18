@@ -46,6 +46,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           export DISTRO=$(lsb_release -sc)
+          echo "deb http://archive.ubuntu.com/ubuntu/ $DISTRO main universe" | sudo tee -a /etc/apt/sources.list
           echo "deb-src http://archive.ubuntu.com/ubuntu/ $DISTRO main universe" | sudo tee -a /etc/apt/sources.list
           sudo apt update
           sudo apt upgrade -y

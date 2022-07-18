@@ -47,6 +47,7 @@ jobs:
         run: |
           export DISTRO=$(lsb_release -sc)
           echo "deb-src http://archive.ubuntu.com/ubuntu/ $DISTRO main universe" | sudo tee -a /etc/apt/source.list
+          sudo apt update
           sudo apt-get build-dep qt6-base-dev
 
       - name: Install Packages - macOS

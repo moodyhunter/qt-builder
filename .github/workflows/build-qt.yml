@@ -12,7 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: windows-latest, setup: 'scoop install msys2 ninja sccache' }
+          - { os: windows-latest, setup: 'scoop install msys2 ninja sccache; msys2' }
           - { os: macos-latest, setup: 'brew install fish ninja' }
           - { os: ubuntu-latest }
     runs-on: ${{ matrix.config.os }}

@@ -10,7 +10,9 @@ jobs:
   prepare:
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        - { os: windows-latest }
+        - { os: macos-latest, ok: true }
+        - { os: ubuntu-latest }
     runs-on: ${{ matrix.os }}
 
     steps:

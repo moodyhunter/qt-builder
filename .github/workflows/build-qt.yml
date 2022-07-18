@@ -75,8 +75,8 @@ jobs:
           echo '${{ matrix.config.cache }}' > .base-kits
           echo 'shared' >> .base-kits
           echo 'release' >> .base-kits
-          echo 'tests' >> .base-kits
-          echo 'examples' >> .base-kits
+          # echo 'tests' >> .base-kits
+          # echo 'examples' >> .base-kits
 
       - name: Update Qt
         run: |

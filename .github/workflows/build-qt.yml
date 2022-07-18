@@ -8,14 +8,15 @@ on:
 
 jobs:
   prepare:
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.os }}
     strategy:
       fail-fast: false
       matrix:
         config:
-          - { os: windows-latest, setup: 'scoop install msys2 ninja sccache; msys2' }
-          - { os: macos-latest, setup: 'brew install fish ninja' }
+          - { os: windows-latest, setup: '' }
+          - { os: macos-latest, setup: '' }
           - { os: ubuntu-latest }
-    runs-on: ${{ matrix.config.os }}
 
     steps:
       - name: Get QtBuildScript
@@ -35,6 +36,22 @@ jobs:
         with:
           add_extras_bucket: true
  
+      - name: Install Packages - Windows
+        if: runner.os == 'Windows'
+        run: |
+          scoop install msys2 ninja sccache
+          msys2
+
+      - name: Install Packages - Linux
+        if: runner.os == 'Linux'
+        run: |
+          true
+
+      - name: Install Packages - macOS
+        if: runner.os == 'macOS'
+        run: |
+          brew install fish ninja
+
       - name: nice
         shell: bash
         run: |

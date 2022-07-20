@@ -15,8 +15,8 @@ jobs:
       matrix:
         config:
           - { os: windows-latest, cache: 'sccache', basedir: 'C:\', shell_prepare: '$env:MSYS2_ROOT="$home\scoop\apps\msys2\current"; $env:PATH="$env:MSYS2_ROOT\usr\bin;$env:PATH"' }
-          - { os: macos-latest,   cache: 'sccache', basedir: './',  shell_prepare: '' }
-          - { os: ubuntu-latest,  cache: 'ccache',  basedir: './',  shell_prepare: '' }
+          - { os: macos-latest,   cache: 'sccache', basedir: './',  shell_prepare: 'pwd' }
+          - { os: ubuntu-latest,  cache: 'ccache',  basedir: './',  shell_prepare: 'pwd' }
 
     steps:
       - name: Get QtBuildScript

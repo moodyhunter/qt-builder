@@ -104,3 +104,11 @@ jobs:
           cd ./QtBuildScript
           ${{ matrix.config.shell_prepare }}
           fish ./build-qt.fish
+
+      - name: Package
+        working-directory: ${{ matrix.config.basedir }}
+        run: |
+          cd ${{ matrix.config.basedir }}
+          cd ./QtBuildScript
+          ${{ matrix.config.shell_prepare }}
+          fish ./utils/package.fish

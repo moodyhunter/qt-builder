@@ -109,3 +109,8 @@ jobs:
           cd ./QtBuildScript
           ${{ matrix.config.shell_prepare }}
           fish ./utils/package.fish
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: ${{ matrix.config.basedir }}/Qt6/nightly/.packaged/

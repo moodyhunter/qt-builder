@@ -92,7 +92,6 @@ jobs:
       - name: Update Qt
         working-directory: ${{ matrix.config.basedir }}
         run: |
-          cd ${{ matrix.config.basedir }}
           cd ./QtBuildScript
           ${{ matrix.config.shell_prepare }}
           fish ./update-qt.fish
@@ -100,7 +99,6 @@ jobs:
       - name: Build Qt
         working-directory: ${{ matrix.config.basedir }}
         run: |
-          cd ${{ matrix.config.basedir }}
           cd ./QtBuildScript
           ${{ matrix.config.shell_prepare }}
           fish ./build-qt.fish
@@ -108,7 +106,6 @@ jobs:
       - name: Package
         working-directory: ${{ matrix.config.basedir }}
         run: |
-          cd ${{ matrix.config.basedir }}
           cd ./QtBuildScript
           ${{ matrix.config.shell_prepare }}
           fish ./utils/package.fish

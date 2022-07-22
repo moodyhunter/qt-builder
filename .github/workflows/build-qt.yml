@@ -103,9 +103,6 @@ jobs:
           ${{ matrix.config.shell_prepare }}
           fish ./build-qt.fish
 
-      - name: tmate
-        uses: mxschmitt/action-tmate@v3.11
-
       - name: Package
         working-directory: ${{ matrix.config.basedir }}
         run: |
